@@ -5,14 +5,14 @@ const redisClient = createClient({
   url: config.redisUrl,
 });
 
-redisClient.on("error", (err) => console.log("Redis Error"));
-redisClient.on("connect", (res) => console.log("Redis connected 🚀"));
+// redisClient.on("error", (err) => console.log("Redis Error"));
+// redisClient.on("connect", (res) => console.log("Redis connected 🚀"));
 // redis connect
 const redisConnect = async () => {
   await redisClient.connect();
 };
 const setData = async (key, data, expireTime) => {
-  console.log("time:", expireTime);
+  //console.log("time:", expireTime);
   await redisClient.set(key, data, { EX: expireTime });
 };
 const getData = async (key) => {

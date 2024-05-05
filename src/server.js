@@ -29,11 +29,11 @@ async function main() {
         const cachedData = await RedisClient.getData("userData");
         if (cachedData) {
           console.log("Returning cached user data...");
-          return res.json(JSON.parse(cachedData));
+          return res.status(200).json(JSON.parse(cachedData));
         }
 
         // If not cached, fetch from the API
-        console.log("API Call");
+        console.log("fetch data");
         const response = await axios.get(
           "https://jsonplaceholder.typicode.com/users"
         );
@@ -42,7 +42,7 @@ async function main() {
         // Cache the fetched user data with an expiration time of 60 seconds
         await RedisClient.setData("userData", JSON.stringify(userData), 60);
 
-        res.json(userData);
+        res.status(200).json(userData);
       } catch (error) {
         console.error("Error:", error.message);
         res.status(500).send("Internal Server Error");
